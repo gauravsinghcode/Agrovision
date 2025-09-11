@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop Advisory System</title>
+    <link rel="stylesheet" href="{%static 'home.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Language Toggle -->
+    <div class="fixed top-4 right-4 z-50 flex bg-white rounded-full shadow-md">
+        <button id="englishBtn" class="language-toggle active px-4 py-2 rounded-full">English</button>
+        <button id="hindiBtn" class="language-toggle px-4 py-2 rounded-full">हिंदी</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-green-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-xl font-bold">Smart Crop Advisory</span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#dashboard" class="hover:text-green-200 font-medium">Dashboard</a>
+                    <a href="#recommendations" class="hover:text-green-200 font-medium">Crop Advice</a>
+                    <a href="#weather" class="hover:text-green-200 font-medium">Weather</a>
+                    <a href="#pests" class="hover:text-green-200 font-medium">Pest Alerts</a>
+                    <a href="{% url 'login' %}" class="hover:text-green-200 font-medium">Login</a>
+                </div>
+                <button class="md:hidden" id="mobileMenuButton">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden bg-green-600 text-white md:hidden">
+        <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+            <a href="#dashboard" class="py-2 hover:text-green-200">Dashboard</a>
+            <a href="#recommendations" class="py-2 hover:text-green-200">Crop Advice</a>
+            <a href="#weather" class="py-2 hover:text-green-200">Weather</a>
+            <a href="#pests" class="py-2 hover:text-green-200">Pest Alerts</a>
+        </div>
+    </div>
+
+    {% block bodyblock %} {% endblock %}
+    <script src="{% static 'home.js' %}"></script>
+</body>
+</html>

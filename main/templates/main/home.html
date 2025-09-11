@@ -1,0 +1,702 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block bodyblock %}
+    <!-- Hero Section -->
+    <section class="farmer-bg py-16 md:py-24">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold text-green-800 mb-4">
+                Smart Farming Solutions for Small Farmers
+            </h1>
+            <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
+                Get personalized crop recommendations, weather forecasts, and pest alerts tailored to your farm's conditions.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#recommendations" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300">
+                    <svg class="inline w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    Get Crop Recommendations
+                </a>
+                <a href="#weather" class="bg-white hover:bg-gray-100 text-green-700 font-bold py-3 px-6 rounded-lg shadow-md transition duration-300">
+                    <svg class="inline w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                    </svg>
+                    Check Weather
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-green-800 mb-8">
+                Your Farming Dashboard
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Weather Card -->
+                <div class="bg-blue-50 rounded-xl p-6 shadow-md card-hover transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-blue-800">Weather</h3>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-600">Temperature</span>
+                        <span class="font-bold text-blue-800" id="currentTemp">28°C</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-600">Rainfall</span>
+                        <span class="font-bold text-blue-800" id="currentRainfall">12 mm</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600">Humidity</span>
+                        <span class="font-bold text-blue-800" id="currentHumidity">65%</span>
+                    </div>
+                </div>
+                
+                <!-- Crop Recommendation Card -->
+                <div class="bg-green-50 rounded-xl p-6 shadow-md card-hover transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-green-800">Recommended Crop</h3>
+                    </div>
+                    <p class="text-gray-700 mb-2">Current Season: <span class="font-semibold" id="currentSeason">Kharif</span></p>
+                    <p class="text-gray-700 mb-4">Best Crop: <span class="font-bold text-green-800" id="bestCrop">Rice</span></p>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-green-600 h-2.5 rounded-full progress-bar" style="width: 85%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Suitability: 85%</p>
+                </div>
+                
+                <!-- Irrigation Card -->
+                <div class="bg-yellow-50 rounded-xl p-6 shadow-md card-hover transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-yellow-800">Irrigation Schedule</h3>
+                    </div>
+                    <p class="text-gray-700 mb-2">Next Irrigation:</p>
+                    <p class="font-bold text-yellow-800 mb-4" id="nextIrrigation">Tomorrow, 6 AM</p>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                        <span class="text-sm text-gray-600">Use drip irrigation to save water</span>
+                    </div>
+                </div>
+                
+                <!-- Pest Alert Card -->
+                <div class="bg-red-50 rounded-xl p-6 shadow-md card-hover transition duration-300">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-red-800">Pest Alert</h3>
+                    </div>
+                    <p class="text-gray-700 mb-2">Current Risk:</p>
+                    <p class="font-bold text-red-800 mb-2" id="pestRisk">Medium</p>
+                    <p class="text-sm text-gray-600">Common Pest: <span class="font-medium" id="commonPest">Rice Stem Borer</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crop Recommendation Form -->
+    <section id="recommendations" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-green-800 mb-8">
+                Get Personalized Crop Recommendations
+            </h2>
+            
+            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <form id="cropRecommendationForm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Soil Type -->
+                            <div>
+                                <label for="soilType" class="block text-gray-700 font-medium mb-2">Soil Type</label>
+                                <select id="soilType" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                    <option value="">Select...</option>
+                                    <option value="clay">Clay</option>
+                                    <option value="sandy">Sandy</option>
+                                    <option value="loamy">Loamy</option>
+                                    <option value="black">Black (Regur)</option>
+                                    <option value="red">Red</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Region -->
+                            <div>
+                                <label for="region" class="block text-gray-700 font-medium mb-2">Region</label>
+                                <select id="region" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                    <option value="">Select...</option>
+                                    <option value="north">North India</option>
+                                    <option value="south">South India</option>
+                                    <option value="east">East India</option>
+                                    <option value="west">West India</option>
+                                    <option value="central">Central India</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Season -->
+                            <div>
+                                <label for="season" class="block text-gray-700 font-medium mb-2">Season</label>
+                                <select id="season" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                    <option value="">Select...</option>
+                                    <option value="kharif">Kharif (June-October)</option>
+                                    <option value="rabi">Rabi (November-April)</option>
+                                    <option value="zaid">Zaid (March-June)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Water Availability -->
+                            <div>
+                                <label for="waterAvailability" class="block text-gray-700 font-medium mb-2">Water Availability</label>
+                                <select id="waterAvailability" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                    <option value="">Select...</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300">
+                                <svg class="inline w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                Get Recommendations
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Results Section (Initially Hidden) -->
+            <div id="recommendationResults" class="hidden mt-12">
+                <h3 class="text-xl font-bold text-green-800 mb-6">Recommended Crops</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Crop 1 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="crop-img w-full h-40">🌾</div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl mb-2 text-green-800">Rice</h4>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">High yield potential</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Water needs: High</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <svg class="w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4M8 19v4m8-4v4"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Growing period: 120-150 days</span>
+                            </div>
+                            <button class="w-full bg-green-100 hover:bg-green-200 text-green-800 font-medium py-2 px-4 rounded-lg transition duration-300">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Crop 2 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="crop-img w-full h-40">🌾</div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl mb-2 text-green-800">Wheat</h4>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Moderate yield potential</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Water needs: Medium</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <svg class="w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4M8 19v4m8-4v4"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Growing period: 110-120 days</span>
+                            </div>
+                            <button class="w-full bg-green-100 hover:bg-green-200 text-green-800 font-medium py-2 px-4 rounded-lg transition duration-300">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Crop 3 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="crop-img w-full h-40">🌽</div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl mb-2 text-green-800">Maize</h4>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Good yield potential</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Water needs: Medium</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <svg class="w-4 h-4 text-purple-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4M8 19v4m8-4v4"/>
+                                </svg>
+                                <span class="text-sm text-gray-600">Growing period: 90-100 days</span>
+                            </div>
+                            <button class="w-full bg-green-100 hover:bg-green-200 text-green-800 font-medium py-2 px-4 rounded-lg transition duration-300">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Download Report Button -->
+                <div class="mt-8 text-center">
+                    <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 inline-flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Download Full Report (PDF)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather Forecast Section -->
+    <section id="weather" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-green-800 mb-8">
+                Weather Forecast for Your Area
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Location Selector -->
+                <div class="mb-8 bg-gray-50 p-4 rounded-lg">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-3/4 mb-4 md:mb-0 md:pr-4">
+                            <label for="locationInput" class="block text-gray-700 font-medium mb-2">Enter your location:</label>
+                            <div class="relative">
+                                <input type="text" id="locationInput" placeholder="e.g., Village name or PIN code" 
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                <button id="fetchWeatherBtn" class="absolute right-2 top-2 text-green-600 hover:text-green-800">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/4">
+                            <button id="useCurrentLocation" class="w-full bg-green-100 hover:bg-green-200 text-green-800 font-medium py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                Current Location
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Current Weather -->
+                <div class="bg-blue-50 rounded-xl p-6 mb-8 shadow-md">
+                    <div class="flex flex-col md:flex-row items-center justify-between">
+                        <div class="flex items-center mb-4 md:mb-0">
+                            <svg class="w-12 h-12 text-blue-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                            </svg>
+                            <div>
+                                <h3 class="text-xl font-bold text-blue-800" id="currentLocation">Delhi, India</h3>
+                                <p class="text-gray-600" id="currentDate">Today, June 15, 2023</p>
+                            </div>
+                        </div>
+                        <div class="text-center md:text-right">
+                            <p class="text-4xl font-bold text-blue-800" id="currentTemperature">28°C</p>
+                            <p class="text-gray-600" id="currentCondition">Partly Cloudy</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5-Day Forecast -->
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">5-Day Weather Forecast</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+                    <!-- Day 1 -->
+                    <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300">
+                        <p class="font-medium text-gray-800 mb-2">Today</p>
+                        <svg class="w-8 h-8 text-yellow-500 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-xl font-bold text-gray-800">32°C</p>
+                        <p class="text-sm text-gray-600">24°C</p>
+                        <p class="text-xs text-gray-500 mt-2">10% rain</p>
+                    </div>
+                    
+                    <!-- Day 2 -->
+                    <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300">
+                        <p class="font-medium text-gray-800 mb-2">Tue</p>
+                        <svg class="w-8 h-8 text-gray-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                        </svg>
+                        <p class="text-xl font-bold text-gray-800">30°C</p>
+                        <p class="text-sm text-gray-600">23°C</p>
+                        <p class="text-xs text-gray-500 mt-2">20% rain</p>
+                    </div>
+                    
+                    <!-- Day 3 -->
+                    <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300">
+                        <p class="font-medium text-gray-800 mb-2">Wed</p>
+                        <svg class="w-8 h-8 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 19.5l2.5-2.5 2.5 2.5"/>
+                        </svg>
+                        <p class="text-xl font-bold text-gray-800">28°C</p>
+                        <p class="text-sm text-gray-600">22°C</p>
+                        <p class="text-xs text-gray-500 mt-2">80% rain</p>
+                    </div>
+                    
+                    <!-- Day 4 -->
+                    <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300">
+                        <p class="font-medium text-gray-800 mb-2">Thu</p>
+                        <svg class="w-8 h-8 text-gray-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                        </svg>
+                        <p class="text-xl font-bold text-gray-800">29°C</p>
+                        <p class="text-sm text-gray-600">23°C</p>
+                        <p class="text-xs text-gray-500 mt-2">30% rain</p>
+                    </div>
+                    
+                    <!-- Day 5 -->
+                    <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300">
+                        <p class="font-medium text-gray-800 mb-2">Fri</p>
+                        <svg class="w-8 h-8 text-yellow-500 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-xl font-bold text-gray-800">31°C</p>
+                        <p class="text-sm text-gray-600">24°C</p>
+                        <p class="text-xs text-gray-500 mt-2">0% rain</p>
+                    </div>
+                </div>
+                
+                <!-- Weather Alerts -->
+                <div class="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-yellow-800">Weather Alert</h3>
+                            <div class="mt-2 text-sm text-yellow-700">
+                                <p>Heavy rainfall expected on Wednesday. Consider delaying irrigation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pest & Disease Alerts -->
+    <section id="pests" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-green-800 mb-8">
+                Pest & Disease Alerts
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Current Risk Level -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Current Risk Level in Your Area</h3>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="px-6 py-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-medium text-gray-700">Pest Risk:</span>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">Medium Risk</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Common Pests -->
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Common Pests This Season</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Pest 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                        <div class="md:flex">
+                            <div class="md:flex-shrink-0">
+                                <div class="pest-img h-48 w-full md:w-48">🐛</div>
+                            </div>
+                            <div class="p-6">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Rice Stem Borer</h4>
+                                <p class="text-sm text-gray-600 mb-4">Affects rice crops during vegetative stage</p>
+                                <div class="flex items-center text-sm text-gray-500 mb-2">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4M8 19v4m8-4v4"/>
+                                    </svg>
+                                    <span>Peak Season: June-August</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="w-4 h-4 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                    </svg>
+                                    <span>Damage Potential: High</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pest 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                        <div class="md:flex">
+                            <div class="md:flex-shrink-0">
+                                <div class="pest-img h-48 w-full md:w-48">🦗</div>
+                            </div>
+                            <div class="p-6">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">Aphids</h4>
+                                <p class="text-sm text-gray-600 mb-4">Sucks sap from leaves, spreads viruses</p>
+                                <div class="flex items-center text-sm text-gray-500 mb-2">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4M8 19v4m8-4v4"/>
+                                    </svg>
+                                    <span>Peak Season: March-May</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="w-4 h-4 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                    </svg>
+                                    <span>Damage Potential: Medium</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prevention Tips -->
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Prevention & Control Tips</h3>
+                <div class="bg-green-50 rounded-lg p-6 shadow-sm">
+                    <div class="space-y-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-gray-700">Use resistant varieties when available</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-gray-700">Practice crop rotation to break pest cycles</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-gray-700">Monitor fields regularly for early signs</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-gray-700">Use neem oil as organic pest control</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            View Complete Pest Management Guide
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fertilizer & Irrigation Guide -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-green-800 mb-8">
+                Fertilizer & Irrigation Guide
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Fertilizer Schedule -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                        <div class="bg-green-600 px-6 py-4">
+                            <h3 class="text-xl font-bold text-white flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                                Fertilizer Schedule
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-2">Organic Fertilizers</h4>
+                                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                        <li>Compost: 5 tons/acre at planting</li>
+                                        <li>Vermicompost: 2 tons/acre after 30 days</li>
+                                        <li>Neem cake: 200 kg/acre as pest deterrent</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-2">Inorganic Fertilizers</h4>
+                                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                        <li>NPK (10:26:26): 50 kg/acre as basal dose</li>
+                                        <li>Urea: 25 kg/acre at 30 days (top dressing)</li>
+                                        <li>DAP: 25 kg/acre at flowering stage</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Irrigation Guide -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                        <div class="bg-blue-600 px-6 py-4">
+                            <h3 class="text-xl font-bold text-white flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                                </svg>
+                                Irrigation Guide
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-2">Irrigation Schedule</h4>
+                                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                        <li>Initial: Immediately after sowing</li>
+                                        <li>Vegetative stage: Every 7-10 days</li>
+                                        <li>Flowering stage: Maintain moist soil</li>
+                                        <li>Maturity stage: Reduce frequency</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-2">Water Saving Tips</h4>
+                                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                        <li>Use drip irrigation for water efficiency</li>
+                                        <li>Apply mulch to reduce evaporation</li>
+                                        <li>Monitor soil moisture regularly</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Download Button -->
+                <div class="mt-8 text-center">
+                    <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 inline-flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Download Full Guide (PDF)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Smart Crop Advisory</h3>
+                    <p class="text-sm text-green-200">
+                        Empowering small farmers with data-driven agricultural advice.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#dashboard" class="text-green-200 hover:text-white text-sm">Dashboard</a></li>
+                        <li><a href="#recommendations" class="text-green-200 hover:text-white text-sm">Crop Advice</a></li>
+                        <li><a href="#weather" class="text-green-200 hover:text-white text-sm">Weather</a></li>
+                        <li><a href="#pests" class="text-green-200 hover:text-white text-sm">Pest Alerts</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-green-200 hover:text-white text-sm">Farming Guides</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-white text-sm">Videos</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-white text-sm">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span class="text-sm text-green-200">support@smartcrop.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                            <span class="text-sm text-green-200">+91 98765 43210</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-green-700 mt-8 pt-6 text-center text-sm text-green-200">
+                <p>© 2023 Smart Crop Advisory System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+
+    <script src="{%static 'home.js' %}" ></script>
+{% endblock %}

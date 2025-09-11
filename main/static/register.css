@@ -1,0 +1,10 @@
+.auth-bg {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+.auth-card {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.farmer-type.active {
+    border-color: #059669;
+    background-color: #ecfdf5;
+}
