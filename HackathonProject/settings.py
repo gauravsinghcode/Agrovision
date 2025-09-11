@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-owl4-k0*d6nyd%m2dpjzc^&0u!b%4h^-890=4*d8_dxx!@@j%s
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "agrovision-k9le.onrender.com,
+    "agrovision-k9le.onrender.com",
     "localhost",
 ]
 
