@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "agrovision-k9le.onrender.com",
+    "localhost",
+    "127.0.0.1"
 ]
 
 
