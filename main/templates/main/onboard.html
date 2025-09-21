@@ -1,0 +1,107 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block bodyblock %}
+
+{% if form.errors %}
+  {% for field in form %}
+   {% for error in field.errors %}
+    <div role="alert" class="bg-red-400 p-3 outline-red-200 rounded-md text-white outline-2 mt-2 mx-5">
+      <span>{{ error }}</span>
+    </div>
+   {% endfor %}
+  {% endfor %}
+{% endif %}
+
+<div class="overflow-hidden w-1/2 mx-auto mt-10 mb-10">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="space-y-12">
+      <div class="border-b border-gray-900/10 pb-12">
+
+          <div class="col-span-full">
+            <label for="photo" class="block text-sm/6 font-medium text-gray-900">Photo</label>
+            <div class="mt-2 flex items-center gap-x-3">
+              <svg viewBox="0 0 24 24" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-12 text-gray-300">
+                <path d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+              <input type="file" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-gray-900/10 pb-12">
+
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="first_name" class="block text-sm/6 font-medium text-gray-900">Current Crop</label>
+            <div class="mt-2">
+              <input id="first_name" type="text" name="first_name" autocomplete="given-name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#15803d] sm:text-sm/6 border-[#15803d] border-2" required/>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="last_name" class="block text-sm/6 font-medium text-gray-900">Sowing Date</label>
+            <div class="mt-2">
+              <input id="last_name" type="date" name="last_name" autocomplete="family-name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#15803d] sm:text-sm/6 border-[#15803d] border-2" required/>
+            </div>
+          </div>
+
+          <div class="col-span-full">
+            <label for="street" class="block text-sm/6 font-medium text-gray-900">Have you used fertilizers before? (Yes/No)</label>
+            <div class="mt-2">
+              <input id="street" type="text" name="street" autocomplete="street-address" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#15803d] sm:text-sm/6 border-[#15803d] border-2" required/>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2 sm:col-start-1">
+            <label for="skills_level" class="block text-sm/6 font-medium text-gray-900">Livestock</label>
+            <div class="mt-2 grid grid-cols-1">
+              <select id="skills_level" name="skills_level" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-[#15803d] border-2 border-[#15803d] sm:text-sm/6">
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+              <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
+                <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="skills_level" class="block text-sm/6 font-medium text-gray-900">Nearby Mandi Name</label>
+            <div class="mt-2 grid grid-cols-1">
+              <select id="skills_level" name="skills_level" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-[#15803d] border-2 border-[#15803d] sm:text-sm/6">
+                <option>Beginner</option>
+                <option>Intermidiate</option>
+                <option>Expert</option>
+              </select>
+              <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
+                <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="skills_level" class="block text-sm/6 font-medium text-gray-900">Preferred Selling Channel</label>
+            <div class="mt-2 grid grid-cols-1">
+              <select id="skills_level" name="skills_level" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-[#15803d] border-2 border-[#15803d] sm:text-sm/6">
+                <option>Local Mandi</option>
+                <option>Direct Buyers</option>
+                <option>Cooperative</option>
+              </select> 
+              <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
+                <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 flex items-center justify-center gap-x-6">
+      <button type="submit" class="rounded-md bg-[#15803d] px-3 py-2 text-sm font-semibold text-white shadow-xs">Next</button>
+    </div>
+  </form>
+
+{% endblock %}

@@ -11,8 +11,10 @@ from types import SimpleNamespace
 def dict_to_obj(d):
     if isinstance(d, dict):
         return SimpleNamespace(**{k: dict_to_obj(v) for k, v in d.items()})
+    
     elif isinstance(d, list):
         return [dict_to_obj(x) for x in d]
+    
     return d
 
 def build_dashboard(profile, farm, language="en"):

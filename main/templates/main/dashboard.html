@@ -46,13 +46,13 @@
   </style>
 </head>
 <body class="bg-gray-50">
-  <div class="flex h-screen overflow-hidden">
+  <div class="flex h-screen overflow-hidden text-white">
     <!-- Sidebar -->
-    <div class="bg-white shadow-lg fixed h-full z-10 w-64 transition-all">
+    <div class="bg-[#15803d] text-white shadow-lg fixed h-full z-10 w-64 transition-all">
       <div class="p-4 border-b border-gray-200">
         <div class="flex items-center space-x-2">
           <i data-feather="sun" class="text-yellow-300"></i>
-          <span class="text-xl font-bold text-gray-800">SmartCrop</span>
+          <a href="{% url 'home' %}"><span class="text-xl font-bold text-white">SmartCrop</span></a>
         </div>
       </div>
 
@@ -60,39 +60,38 @@
         <div class="flex items-center space-x-3 mb-6">
           <img src="https://ui-avatars.com/api/?name={{ profile.full_name|default:'Farmer'|urlencode }}&background=0D8ABC&color=fff" alt="User" class="w-10 h-10 rounded-full">
           <div>
-            <div class="font-medium">{{ profile.full_name|default:request.user.username }}</div>
-            <div class="text-xs text-gray-500">Small Farmer</div>
+            <div class="font-medium">{{ farmer }}</div>
           </div>
         </div>
 
         <nav class="space-y-1">
           <a href="{% url 'dashboard' %}" class="flex items-center space-x-3 px-3 py-2 rounded-md active-nav-item">
-            <i data-feather="home"></i><span class="nav-text">Dashboard</span>
+            <i data-feather="home"></i><span class="text-white">Dashboard</span>
           </a>
           <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
-            <i data-feather="compass"></i><span class="nav-text">Crop Advisory</span>
+            <i data-feather="compass"></i><span class="text-white">Crop Advisory</span>
           </a>
           <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
-            <i data-feather="cloud"></i><span class="nav-text">Weather</span>
+            <i data-feather="cloud"></i><span class="text-white">Weather</span>
           </a>
           <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
-            <i data-feather="alert-triangle"></i><span class="nav-text">Alerts</span>
+            <i data-feather="alert-triangle"></i><span class="text-white">Alerts</span>
           </a>
           <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
-            <i data-feather="bar-chart-2"></i><span class="nav-text">Market Prices</span>
+            <i data-feather="bar-chart-2"></i><span class="text-white">Market Prices</span>
           </a>
           <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
-            <i data-feather="book"></i><span class="nav-text">Resources</span>
+            <i data-feather="book"></i><span class="text-white">Resources</span>
           </a>
           <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
-            <i data-feather="settings"></i><span class="nav-text">Settings</span>
+            <i data-feather="settings"></i><span class="text-white">Settings</span>
           </a>
         </nav>
       </div>
 
       <div class="absolute bottom-0 w-full p-4 border-t border-gray-200">
         <a href="{% url 'logout' %}" class="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
-          <i data-feather="log-out"></i><span class="nav-text">Logout</span>
+          <i data-feather="log-out"></i><span class="text-white">Logout</span>
         </a>
       </div>
     </div>
@@ -118,7 +117,7 @@
             </button>
             <div class="flex items-center space-x-2">
               <img src="https://ui-avatars.com/api/?name={{ profile.full_name|default:'F'|urlencode }}&background=0D8ABC&color=fff" alt="User" class="w-8 h-8 rounded-full">
-              <span class="text-sm font-medium">{{ request.user.username }}</span>
+              <span class="text-sm font-medium text-gray-800">{{ farmer }}</span>
             </div>
           </div>
         </div>
@@ -127,7 +126,7 @@
       <!-- Main Content Area -->
       <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
         <div class="mb-6">
-          <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
+          <h1 class="text-2xl font-bold text-gray-800 mb-2">Dashboard</h1>
           <p class="text-gray-600">Welcome back! Here's what's happening with your farm.</p>
         </div>
 
@@ -148,20 +147,20 @@
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-gray-500 text-sm">Farm Area</p>
-                <h3 class="text-xl font-bold mt-1">
-                  {% if farm %}{{ farm.area_value }} {{ farm.get_area_unit_display }}{% else %}—{% endif %}
+                <h3 class="text-xl font-bold mt-1 text-blue-600">
+                  {{ farm.area_value }} {{ farm.area_unit }}
                 </h3>
               </div>
               <div class="bg-blue-100 p-3 rounded-full"><i data-feather="map" class="text-blue-600"></i></div>
             </div>
-            <p class="text-sm text-gray-500 mt-2">Village: {{ profile.village|default:"—" }}</p>
+            <p class="text-sm text-gray-500 mt-2">Village: {{ farmer.village |default:"—" }}</p>
           </div>
 
           <div class="bg-white rounded-lg shadow p-6">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-gray-500 text-sm">Soil Type</p>
-                <h3 class="text-xl font-bold mt-1">{{ farm.soil_type|capfirst|default:"—" }}</h3>
+                <h3 class="text-xl font-bold mt-1 text-[#f5dd5d]">{{ farm.soil_type |default:"—" }}</h3>
               </div>
               <div class="bg-yellow-100 p-3 rounded-full"><i data-feather="layers" class="text-yellow-600"></i></div>
             </div>
@@ -179,6 +178,66 @@
             <p class="text-sm text-gray-500 mt-2">Last: —</p>
           </div>
         </div>
+
+
+      <div class="grid md:grid-cols-4 gap-6 mb-6">
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-500 text-sm">Nitrogen</p>
+                <h3 class="text-xl font-bold mt-1 text-purple-500">{{ farm.nitrogren|default:"200" }}</h3>
+              </div>
+              <div class="bg-purple-100 p-3 rounded-full"><i data-feather="sun" class="text-purple-600"></i></div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-500 text-sm">Phosphorus</p>
+                <h3 class="text-xl font-bold mt-1 text-blue-600">
+                  {{ farm.phosphorus | default:"120" }}
+                </h3>
+              </div>
+              <div class="bg-yellow-100 p-3 rounded-full"><i data-feather="map" class="text-yellow-600"></i></div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-500 text-sm">Potassium</p>
+                <h3 class="text-xl font-bold mt-1 text-[#f5dd5d]">{{ farm.potassium |default:"50" }}</h3>
+              </div>
+              <div class="bg-blue-100 p-3 rounded-full"><i data-feather="layers" class="text-blue-600"></i></div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-500 text-sm">pH</p>
+                <h3 class="text-xl font-bold mt-1 text-green-500">{{ farm.ph|default:"7" }}</h3>
+              </div>
+              <div class="bg-green-100 p-3 rounded-full"><i data-feather="droplet" class="text-green-600"></i></div>
+            </div>
+          </div>
+        </div>
+
+      <div class="bg-green-100 rounded-lg shadow overflow-hidden mb-6 p-5">
+        <div class="flex flex-row">
+          <span><h3 class="text-lg font-bold text-green-500 m-2">Recommended Crop : </h3></span>
+          <span><h2 class="text-2xl font-bold text-blue-800 m-2">{{ predicted_crop }}</h2></span>
+        </div>
+        <ul class="list text-green-500 ml-7" style="list-style-type:disc;">
+          <li class="mt-2">Soil pH is suitable ( {{ farm.ph | default:"7" }} )</li>
+          <li class="mt-2">Temperature ( {{ weather.tmax }} ) is optimal</li>
+          <li class="mt-2">Nitrogen levels support ( {{ predicted_crop }} )</li>
+          <li class="mt-2">Model Confidence: {{ confidence }}%</li>
+        </ul>
+        
+        
+      </div>
 
         <!-- Alerts Section -->
         <div class="mb-6">
@@ -211,189 +270,128 @@
           </div>
         </div>
 
-        <!-- Weather and Crop Recommendation -->
-        <div class="grid md:grid-cols-3 gap-6 mb-6">
-          <!-- Weather Card -->
-        <div class="md:col-span-1 bg-white rounded-lg shadow overflow-hidden">
-            <div class="p-4 border-b border-gray-200 bg-blue-50">
-                <h2 class="font-bold text-gray-800 flex items-center">
-                    <i data-feather="cloud" class="mr-2 text-blue-500"></i>
-                    Weather Forecast – {{ location_name }}
-                </h2>
-            </div>
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-800">Irrigation Tasks</h2>
+            <a href="#" class="text-sm text-green-600 hover:underline">View All</a>
+          </div>
 
-            <div class="p-4">
-                {% if weather.daily %}
-                    <!-- Today’s Weather -->
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center">
-                            <i data-feather="sun" class="text-yellow-500 text-3xl mr-3"></i>
+          <div class="bg-white rounded-lg shadow overflow-hidden">
+            {% if irrigation_tasks %}
+              {% for task in irrigation_tasks %}
+                <div class="p-4 border-b border-gray-200 flex items-center justify-between {% if a.severity == 'urgent' %}bg-red-50{% elif a.severity == 'high' %}bg-orange-50{% else %}bg-white{% endif %}">
+                  <div class="flex items-center space-x-3">
+                    <div class="p-2 {% if a.type == 'weather' %}bg-yellow-100{% elif a.type == 'market' %}bg-green-100{% else %}bg-red-100{% endif %} rounded-full">
+                      <i data-feather="alert-triangle" class="text-red-500"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-medium">Alert</h3>
+                      <p class="text-sm text-gray-600">{{ task }}</p>
+                    </div>
+                  </div>
+                  <span class="text-xs text-gray-500">{{ a.created_at|timesince }} ago</span>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="p-6 text-sm text-gray-500">No tasks right now.</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="md:col-span-1 bg-white rounded-lg shadow overflow-hidden">
+        <div class="p-4 border-b border-gray-200 bg-blue-50">
+            <h2 class="font-bold text-gray-800 flex items-center">
+                <i data-feather="cloud" class="mr-2 text-blue-500"></i>
+                Weather Forecast – {{ farmer.district }}
+            </h2>
+        </div>
+        <section id="weather" class="py-12 bg-white rounded-lg shadow overflow-hidden">
+        <div class="container mx-auto px-4">
+                <!-- Current Weather -->
+                <div class="bg-blue-50 rounded-xl p-6 mb-8 shadow-md">
+                    <div class="flex flex-col md:flex-row items-center justify-between">
+                        <div class="flex items-center mb-4 md:mb-0">
+                            <svg class="w-12 h-12 text-blue-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                            </svg>
                             <div>
-                                <div class="text-2xl font-bold">{{ weather.daily.0.tmax }}°C</div>
-                                <div class="text-sm text-gray-600">{{ weather.daily.0.desc }}</div>
+                                <h3 class="text-xl font-bold text-blue-800" id="currentLocation">{{ farmer.district }}, India</h3>
+                                <p class="text-gray-600" id="currentDate">Today, June 15, 2023</p>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <div class="text-sm text-gray-600">Humidity: {{ weather.humidity }}%</div>
-                            <div class="text-sm text-gray-600">Rain: {{ weather.daily.0.rain_prob }}%</div>
+                        <div class="text-center md:text-right">
+                            <p class="text-4xl font-bold text-blue-800" id="currentTemperature">{{ weather.tmax }} °C </p>
+                            <p class="text-gray-600" id="currentCondition">{{ weather.main_weather }}</p>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-4 gap-2 text-center">
-                        {% for day in weather.daily %}
-                        <div class="p-2 border rounded-lg hover:bg-blue-50 transition">
-                            <div class="text-sm font-medium">Day {{ forloop.counter }}</div>
-                            <div class="text-sm font-bold">{{ day.tmax }}°/{{ day.tmin }}°</div>
-                            <div class="text-xs text-gray-500">{{ day.desc }}</div>
-                            <div class="text-xs text-blue-600">Rain: {{ day.rain_prob }}%</div>
-                        </div>
-                        {% endfor %}
+                </div>
+                
+                <!-- 5-Day Forecast -->
+                 
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">5-Day Weather Forecast</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+                    <!-- Day 1 -->
+                  {% for day in weather.daily %}
+                    <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300">
+                        <p class="font-medium text-gray-800 mb-2">Day {{ forloop.counter }} </p>
+                        <svg class="w-8 h-8 text-yellow-500 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-xl font-bold text-gray-800 mb-2">{{ day.tmax }}°C</p>
+                        <p class="text-sm text-gray-600">{{ day.tmin }}°C</p>
+                        <p class="text-xs text-gray-500 mt-2">{{ day.rain_prob }}% rain</p>
+                        <p class="text-xs text-gray-500 mt-2">{{ day.desc }}</p>
                     </div>
-                {% else %}
-                    <p class="text-gray-500 text-sm">No forecast data available.</p>
-                {% endif %}
+                  {% endfor %}
             </div>
         </div>
 
-          <!-- Crop Recommendation Card -->
-          <div class="md:col-span-2 bg-white rounded-lg shadow overflow-hidden">
-            <div class="p-4 border-b border-gray-200 bg-green-50">
-              <h2 class="font-bold text-gray-800 flex items-center">
-                <i data-feather="compass" class="mr-2 text-green-500"></i>Crop Recommendation
-              </h2>
-            </div>
-            <div class="p-4">
-              <div class="mb-4">
-                <h3 class="font-medium mb-2">
-                  For {{ profile.state|default:"your region" }} – {{ farm.soil_type|capfirst|default:"Soil" }}
-                </h3>
-                <p class="text-gray-600 text-sm">
-                  Based on your soil type ({{ farm.soil_type|capfirst|default:"—" }}) and location ({{ profile.district|default:"—" }}).
-                </p>
-              </div>
-
-              <div class="grid md:grid-cols-3 gap-4">
-                <!-- Example static items can be replaced with dynamic list when ready -->
-                <div class="border border-gray-200 rounded-lg p-3 hover:border-green-300 transition">
-                  <div class="flex items-center mb-2">
-                    <img src="https://placehold.co/100x100" alt="Crop" class="w-10 h-10 rounded-full mr-2">
-                    <h4 class="font-medium">{{ farm.crop_current|default:"Wheat" }}</h4>
-                  </div>
-                  <p class="text-gray-600 text-sm mb-2">Best suited for your soil. High market demand.</p>
-                  <div class="flex justify-between text-xs">
-                    <span class="text-green-600">+22% Yield</span>
-                    <span>₹2,015/qtl</span>
-                  </div>
+        <!-- Weather Alerts -->
+        <div class="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 ml-5 mr-5 rounded-md">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                    </svg>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg p-3 hover:border-green-300 transition">
-                  <div class="flex items-center mb-2">
-                    <img src="https://placehold.co/100x100" alt="Mustard" class="w-10 h-10 rounded-full mr-2">
-                    <h4 class="font-medium">Mustard</h4>
-                  </div>
-                  <p class="text-gray-600 text-sm mb-2">Good alternative crop. Requires less water.</p>
-                  <div class="flex justify-between text-xs">
-                    <span class="text-blue-600">+15% Yield</span>
-                    <span>₹5,420/qtl</span>
-                  </div>
+                <div class="ml-3 w-full">
+                    <h3 class="text-sm font-medium text-yellow-800">Weather Alert</h3>
+                    <div class="mt-2 text-sm text-yellow-700 w-full">
+                        <p>Heavy rainfall expected on Wednesday. Consider delaying irrigation.</p>
+                    </div>
                 </div>
-
-                <div class="border border-gray-200 rounded-lg p-3 hover:border-green-300 transition">
-                  <div class="flex items-center mb-2">
-                    <img src="https://placehold.co/100x100" alt="Potato" class="w-10 h-10 rounded-full mr-2">
-                    <h4 class="font-medium">Potato</h4>
-                  </div>
-                  <p class="text-gray-600 text-sm mb-2">High investment but good returns expected.</p>
-                  <div class="flex justify-between text-xs">
-                    <span class="text-yellow-600">+18% Yield</span>
-                    <span>₹800/qtl</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-4">
-                <a href="#" class="text-green-600 text-sm font-medium hover:underline flex items-center">
-                  <i data-feather="chevron-right" class="w-4 h-4 mr-1"></i>
-                  View detailed crop calendar and cultivation practices
-                </a>
-              </div>
             </div>
-          </div>
         </div>
-
-        <!-- Recent Activities -->
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-          <div class="p-4 border-b border-gray-200 bg-gray-50">
-            <h2 class="font-bold text-gray-800 flex items-center">
-              <i data-feather="activity" class="mr-2 text-purple-500"></i>
-              Recent Activities
-            </h2>
-          </div>
-          <div class="divide-y divide-gray-200">
-            <div class="p-4 flex items-start">
-              <div class="bg-purple-100 p-2 rounded-full mr-3"><i data-feather="droplet" class="text-purple-500"></i></div>
-              <div class="flex-1">
-                <h3 class="font-medium">Irrigation Completed</h3>
-                <p class="text-gray-600 text-sm">You irrigated your {{ farm.crop_current|default:"crop" }} field recently</p>
-              </div>
-              <span class="text-xs text-gray-500">2 days ago</span>
-            </div>
-            <div class="p-4 flex items-start">
-              <div class="bg-green-100 p-2 rounded-full mr-3"><i data-feather="check-circle" class="text-green-500"></i></div>
-              <div class="flex-1">
-                <h3 class="font-medium">Pesticide Applied</h3>
-                <p class="text-gray-600 text-sm">Preventive spray recorded</p>
-              </div>
-              <span class="text-xs text-gray-500">5 days ago</span>
-            </div>
-            <div class="p-4 flex items-start">
-              <div class="bg-blue-100 p-2 rounded-full mr-3"><i data-feather="book" class="text-blue-500"></i></div>
-              <div class="flex-1">
-                <h3 class="font-medium">Article Read</h3>
-                <p class="text-gray-600 text-sm">“Wheat Cultivation Best Practices”</p>
-              </div>
-              <span class="text-xs text-gray-500">1 week ago</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Today’s Tasks -->
-        <h2 class="text-xl font-bold text-gray-800">{{ adv.today.title }}</h2>
-        <ul class="mt-2 space-y-2">
-        {% for it in adv.today.items %}
-            <li class="text-sm text-gray-700">• {{ it.label }}</li>
-        {% empty %}
-            <li class="text-sm text-gray-500">No tasks today</li>
-        {% endfor %}
-        </ul>
-
-        <!-- Weather cards -->
-        <div class="grid grid-cols-4 gap-2 text-center mt-4">
-        {% for d in adv.weather.daily %}
-            <div class="p-2 bg-white rounded shadow">
-            <div class="text-sm font-medium">{% if forloop.first %}Today{% else %}D{{ forloop.counter }}{% endif %}</div>
-            <div class="text-sm">{{ d.tmax }}°/{{ d.tmin }}°</div>
-            <div class="text-xs text-gray-600">{{ d.rain_prob }}% rain</div>
-            <div class="text-xs text-gray-600">{{ d.desc }}</div>
-            </div>
-        {% endfor %}
-        </div>
-
-        <!-- Crop suggestions -->
-        <div class="mt-6 grid md:grid-cols-3 gap-4">
-        {% for c in adv.crops %}
-            <div class="border border-gray-200 rounded-lg p-3">
-            <h4 class="font-medium">{{ c.title }}</h4>
-            <p class="text-sm text-gray-600">{{ c.reason }}</p>
-            </div>
-        {% empty %}
-            <div class="text-sm text-gray-500">No crop suggestions</div>
-        {% endfor %}
-        </div>
-      </main>
+    </section>
     </div>
-  </div>
 
+    <div class="md:col-span-2 bg-white rounded-lg shadow overflow-hidden mt-5">
+      <div class="p-4 border-b border-gray-200 bg-green-50">
+        <h2 class="font-bold text-gray-800 flex items-center">
+          <i data-feather="compass" class="mr-2 text-green-500"></i>Crop Recommendation
+        </h2>
+      </div>
+      <div class="p-4">
+        <div class="mb-4">
+          <h3 class="font-medium mb-2">
+            For {{ profile.state|default:"your region" }} – {{ farm.soil_type|capfirst|default:"Soil" }}
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Based on your soil type ({{ farm.soil_type|capfirst|default:"—" }}) and location ({{ farmer.district|default:"—" }}).
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+           {% for crop in top_crops %}
+          <div class="border border-gray-200 rounded-lg p-3 hover:border-green-300 transition">
+            <div class="flex items-center mb-2">
+              <h4 class="font-medium text-green-600">{{ crop.0 }}</h4>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">Confidence: {{ crop.1 }}</p>
+          </div>
+          {% endfor %}
+      </div>
+    </div>
 
   <script>
     const sb  = document.getElementById('sidebar');
